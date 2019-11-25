@@ -5,19 +5,19 @@ const router = Router();
 
 /* Hace referencia a la conexion de la BD */
 const poolConnection = require('../../../lib/dbConnect');
-const { encryptPassword } = require('../../../lib/helpers');
+const { encryptPassword, configurationCors } = require('../../../lib/helpers');
 
-router.get('/typeDocuments', async(req, res, next) => {
+router.get('/typeDocuments', configurationCors, async(req, res, next) => {
     const documents = await poolConnection.query('SELECT * FROM documents');
     res.json({ documents });
 });
 
-router.get('/neighborhoods', async(req, res, next) => {
+router.get('/neighborhoods', configurationCors, async(req, res, next) => {
     const neighborhoods = await poolConnection.query('SELECT * FROM neighborhoods');
     res.json({ neighborhoods });
 });
 
-router.get('/houses', async(req, res, next) => {
+router.get('/houses', configurationCors, async(req, res, next) => {
     const houses = await poolConnection.query('SELECT * FROM houses');
     res.json({ houses });
 });
