@@ -13,7 +13,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const whitelist = ['https://proyecto-reciclapp-backend.herokuapp.com', 'http://localhost:4000'];
+const whitelist = ['https://proyecto-reciclapp-backend.herokuapp.com', 'https://proyecto-reciclapp-backend.herokuapp.com', 'http://localhost:4000'];
 const corsOptions = {
     origin: (origin, callback) => {
         const existe = whitelist.some(dominio => dominio === origin);
