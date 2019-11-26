@@ -12,21 +12,9 @@ app.set('port', process.env.PORT || 4000);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-const whitelist = ['https://proyecto-reciclapp-backend.herokuapp.com', 'https://proyecto-reciclapp-backend.herokuapp.com', 'http://localhost:4000'];
-const corsOptions = {
-    origin: (origin, callback) => {
-        const existe = whitelist.some(dominio => dominio === origin);
-
-        if (existe) {
-            callback(null, true);
-        } else {
-            callback(new Error('No es permitido por CORS'));
-        }
-    },
-    credentials: true
-}
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: 'https://proyecto-reciclapp-frontend.herokuapp.com'
+}));
 
 /* User Routes */
 app.use('/api/registerUser', require('./routes/api/user/registerUser'));
