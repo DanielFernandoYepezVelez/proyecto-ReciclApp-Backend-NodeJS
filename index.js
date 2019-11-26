@@ -9,18 +9,21 @@ const app = express();
 
 app.set('port', process.env.PORT || 4000);
 
-// app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// Configurar cabeceras y cors
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://proyecto-reciclapp-frontend.herokuapp.com');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-});
+
+var whitelist = ['http://localhost:4000', 'https://proyecto-reciclapp-backend.herokuapp.com'];
+var corsOptions = {
+    origin: function(origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('No es permitido por CORS'))
+        }
+    }
+}
+app.use(cors(corsOptions));
 
 /* User Routes */
 app.use('/api/registerUser', require('./routes/api/user/registerUser'));
