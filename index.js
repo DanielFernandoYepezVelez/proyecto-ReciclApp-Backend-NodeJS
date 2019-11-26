@@ -13,15 +13,18 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-var whitelist = ['http://localhost:4000', 'https://proyecto-reciclapp-backend.herokuapp.com'];
-var corsOptions = {
-    origin: function(origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
+const whitelist = ['https://proyecto-reciclapp-backend.herokuapp.com', 'http://localhost:4000'];
+const corsOptions = {
+    origin: (origin, callback) => {
+        const existe = whitelist.some(dominio => dominio === origin);
+
+        if (existe) {
+            callback(null, true);
         } else {
-            callback(new Error('No es permitido por CORS'))
+            callback(new Error('No es permitido por CORS'));
         }
-    }
+    },
+    credentials: true
 }
 app.use(cors(corsOptions));
 
